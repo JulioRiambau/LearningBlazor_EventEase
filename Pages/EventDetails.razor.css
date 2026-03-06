@@ -1,0 +1,32 @@
+.event-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+    padding: 18px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.event-name {
+    font-size: 1.3em;
+    color: #2980b9;
+    font-weight: bold;
+}
+
+.event-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 1em;
+    color: #555;
+}
+
+.event-date {
+    font-weight: 500;
+}
+
+.event-location {
+    font-style: italic;
+    color: #16a085;
+}

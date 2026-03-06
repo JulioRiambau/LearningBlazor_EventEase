@@ -1,0 +1,48 @@
+@page "/event/{id:guid}"
+
+@using EventEase.Models
+@using EventEase.Services
+@inject EventsService EventsService
+@inject EventEase.Services.UserSessionTracker SessionTracker
+
+
+<h2>Event Details</h2>
+@if (isLoading)
+{
+    <p>Loading...</p>
+}
+else if (eventItem == null)
+{
+    <p>Event not found.</p>
+}
+else
+{
+    <div class="event-card">
+        <strong class="event-name">@eventItem.Name</strong>
+        <div class="event-details">
+            <span class="event-date">Date: @eventItem.Date.ToString("MMMM dd, yyyy")</span>
+            <span class="event-location">Location: @eventItem.Location</span>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Guid id { get; set; }
+
+    private Event? eventItem;
+    private bool isLoading = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        isLoading = true;
+        eventItem = await EventsService.GetEventByIdAsync(id);
+        OnViewEvent(id);
+        isLoading = false;
+    }
+
+    void OnViewEvent(Guid eventId)
+    {
+        SessionTracker.TrackEventView(eventId);
+    }
+}

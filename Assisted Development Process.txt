@@ -1,0 +1,47 @@
+Assisted Development Process with GitHub Copilot
+
+Used copilot integrated with the IDE to implement this project interactively.
+Slowly builded each feature learning along with the feedback from the AI.
+Implemented and refactored to apply best practices fro Blazor. 
+
+
+1. Project Initialization:
+   - Created Blazor WebAssembly projects (EventEase, Performance).
+   - Set up .gitignore files for clean source control.
+
+2. Model & Service Design:
+   - Designed Event model with Guid Id and validation attributes.
+   - Implemented EventsService as a singleton with async methods and Dictionary storage.
+   - Added UserSessionTracker for session state, registered as scoped DI service.
+
+3. UI Development:
+   - Built Home.razor, EventRegistration.razor, and EventDetails.razor pages.
+   - Used async data loading, error handling, and session tracking.
+   - Integrated Virtualize component and @key directive for performance.
+
+4. Error Handling & Logging:
+   - Added ErrorBoundary and ErrorContent in App.razor.
+   - Integrated Serilog.BrowserConsole for client-side logging.
+   - Used ILogger for logging in components.
+
+5. CSS Isolation & UI Improvements:
+   - Moved styles to .razor.css files for isolation.
+   - Improved selector specificity and removed list item dots.
+   - Enhanced UI for event lists and viewed events.
+
+6. Best Practices:
+   - Used dependency injection for services.
+   - Applied async/await for all service methods.
+   - Ensured model validation and loading indicators.
+   - Tracked viewed events per user session.
+
+7. Performance Optimization:
+   - Used Virtualize for event lists.
+   - Improved rendering with @key directive.
+
+8. Iterative Refinement:
+   - Addressed UI and code issues as requested.
+   - Applied user feedback for further improvements.
+
+9. Documentation:
+   - Maintained Assisted Development Process.txt with development steps.

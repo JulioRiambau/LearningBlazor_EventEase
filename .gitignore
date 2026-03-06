@@ -1,0 +1,46 @@
+# .gitignore for Blazor (ASP.NET Core) projects
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# IIS
+*.vspscc
+
+# NuGet
+*.nupkg
+# NuGet Packages
+*.snupkg
+# NuGet restore result
+project.lock.json
+project.nuget.cache
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Publish results
+*.pubxml
+*.publishproj
+
+# Web config
+web.config
+
+# Logs
+*.log
+
+# Others
+*.DS_Store
+*.idea/
+*.vs/
+
+# Optional: ignore sample-data and lib folders in wwwroot
+wwwroot/sample-data/
+wwwroot/lib/

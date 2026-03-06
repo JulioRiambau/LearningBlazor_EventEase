@@ -1,0 +1,79 @@
+﻿@page "/"
+
+@using EventEase.Pages
+@using Microsoft.AspNetCore.Components
+@using Serilog
+@inject EventEase.Services.EventsService EventsService
+@inject EventEase.Services.UserSessionTracker SessionTracker
+
+<PageTitle>EventEase</PageTitle>
+
+<h1 class="event-title">Upcoming Events</h1>
+
+@if (isLoading)
+{
+    <div>Loading events...</div>
+}
+else if (loadError != null)
+{
+    <div class="alert alert-danger">@loadError</div>
+}
+else
+{
+    <Virtualize Items="events" Context="ev">
+        <li class="event-item" @key="ev.Id">
+            <a href="/event/@ev.Id" style="text-decoration:none;color:inherit;">
+                <div class="event-card">
+                    <strong class="event-name">@ev.Name</strong>
+                    <div class="event-details">
+                        <span class="event-date">Date: @ev.Date.ToString("MMMM dd, yyyy")</span>
+                        <span class="event-location">Location: @ev.Location</span>
+                    </div>
+                </div>
+            </a>
+        </li>
+    </Virtualize>
+    @if (SessionTracker.ViewedEventIds.Any())
+    {
+        <div class="viewed-events-section mt-4 p-3 rounded bg-light border">
+            <h4 class="viewed-events-title mb-2">Viewed Events</h4>
+            <ul class="viewed-events-list">
+                @foreach (var viewedId in SessionTracker.ViewedEventIds)
+                {
+                    var viewedEvent = events.FirstOrDefault(e => e.Id == viewedId);
+                    if (viewedEvent != null)
+                    {
+                        <li class="viewed-event-item" @key="viewedEvent.Id">
+                            <span class="viewed-event-name">@viewedEvent.Name</span>
+                            <span class="viewed-event-date">(@viewedEvent.Date.ToString("MMMM dd, yyyy"))</span>
+                            <span class="viewed-event-location">- @viewedEvent.Location</span>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    }
+}
+
+@code {
+    private List<EventEase.Models.Event> events = new();
+    private bool isLoading = true;
+    private string? loadError;
+
+    protected override async Task OnInitializedAsync()
+    {
+        isLoading = true;
+        loadError = null;
+        try
+        {
+            var result = await EventsService.GetEventsAsync();
+            events = result.ToList();
+        }
+        catch (Exception ex)
+        {
+            loadError = "Failed to load events. Please try again later.";
+            Log.Error(ex, "Error loading events in Home.razor");
+        }
+        isLoading = false;
+    }
+}
